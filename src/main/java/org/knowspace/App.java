@@ -8,7 +8,7 @@ public class App
 {
     public static void main( String[] args ) throws Exception
     {
-        RequestManager udl = new RequestManager("Basic YnJhbmRvbi5zZXh0b24yOlRvbW1pZVR1bmFidXJnZXIhMQ==");
+        RequestManager udl = new RequestManager("ADD_CREDENTIALS_HERE");
         Epoch qStart = Epoch.fromStringUTC("2023-10-16T23:00:00.000000Z");
         Epoch qEnd = Epoch.fromStringUTC("2023-10-17T00:00:00.000000Z");
         LiveOpticalOb[] obs = udl.getAllOpticalObservations(qStart, qEnd);
