@@ -1,5 +1,3 @@
-# This code is licensed under the MIT License.
-# Please see the LICENSE file in the root directory for more information.
 # knowspace
 ## Description
 ## Table of Contents
