@@ -164,7 +164,6 @@ public class TimeUtilities
     public static double stringToMJD(String NewDateTimeString)
     {
         String[] DateTimeArray = TimeUtilities.stringToDateTimeArray(NewDateTimeString);
-        System.out.println(DateTimeArray[0] + " " + DateTimeArray[1] + " " + DateTimeArray[2] + " " + DateTimeArray[3] + " " + DateTimeArray[4] + " " + DateTimeArray[5]);
         return dateTimeValuesToMJD(
             Integer.parseInt(DateTimeArray[0]),
             Integer.parseInt(DateTimeArray[1]),
