@@ -6,7 +6,7 @@ import org.knowspace.geometry.Angles;
 
 public class Sun {
 
-    public static final double MU = 132712440018.0; // km^3/s^2
+    public static final double MU = 1.327124400419e11; // km^3/s^2
     public static final double RADIUS = 695700.0; // km
     public static final double P = 4.56e-6; // N/m^2
     
@@ -16,6 +16,11 @@ public class Sun {
     
     private Sun() {}
 
+    /**
+     * Returns the position of the Sun in the Earth-centered inertial frame at the given epoch.
+     * @param posTime The epoch at which to calculate the position.
+     * @return The position of the Sun in the Earth-centered inertial frame at the given epoch.
+     */
     public static Vector getPosition(Epoch posTime) {
 
         double t = posTime.julianCenturiesPastJ2000();

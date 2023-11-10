@@ -6,7 +6,7 @@ import org.knowspace.linalg.Vector;
 
 public class Moon {
     
-    public static final double MU = 4902.8005821478; // km^3/s^2
+    public static final double MU = 4902.800305555; // km^3/s^2
     public static final double RADIUS = 1737.4; // km
 
     private static final double A0 = Angles.degreeMinuteSecondToRadians(0, 0, 22640.0);
@@ -36,6 +36,11 @@ public class Moon {
 
     private Moon(){}
 
+    /**
+     * Returns the position of the Moon in the Earth-centered inertial frame at the given epoch.
+     * @param epoch The epoch at which to calculate the position.
+     * @return The position of the Moon in the Earth-centered inertial frame at the given epoch.
+     */
     public static Vector getPosition(Epoch epoch) {
         //Equation 3.47
         double t = epoch.julianCenturiesPastJ2000();
