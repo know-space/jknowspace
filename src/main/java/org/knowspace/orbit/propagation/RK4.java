@@ -101,6 +101,7 @@ public class RK4 {
         d[1] = d[1].plus(Perturbations.thirdBodyAcceleration(y[0], Sun.getPosition(epoch), Sun.MU));
         d[1] = d[1].plus(Perturbations.thirdBodyAcceleration(y[0], Moon.getPosition(epoch), Moon.MU));
         d[1] = d[1].plus(Perturbations.srpAcceleration(y[0].minus(Sun.getPosition(epoch)), srpScalar));
+        d[1] = d[1].plus(Perturbations.geopotentialAcceleration(y[0], epoch));
         return d;
     }
 

@@ -1,8 +1,5 @@
 package org.knowspace.bodies;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.knowspace.geometry.Angles;
 import org.knowspace.linalg.Matrix;
 import org.knowspace.time.Epoch;
@@ -32,43 +29,51 @@ public class Earth {
     private static final double COEFF_N = Math.toRadians(0.0026);
     private static final double COEFF_O = Math.toRadians(0.0002);
 
-    public static final List<List<Double>> C = new ArrayList<List<Double>>() {{
-        add(Arrays.asList(1.0));
-        add(Arrays.asList(0.0, 0.0));
-        add(Arrays.asList(-0.484165143790815e-3 / Math.sqrt(0.2), -0.206615509074176e-9 / Math.sqrt(0.6), 0.243938357328313e-5 / Math.sqrt(2.4)));
-        add(Arrays.asList(
+    public static final double[][] C = new double[][]{
+        new double[]{1.0},
+        new double[]{0.0, 0.0},
+        new double[]{
+            -0.484165143790815e-3 / Math.sqrt(0.2),
+            -0.206615509074176e-9 / Math.sqrt(0.6),
+            0.243938357328313e-5 / Math.sqrt(2.4)
+        },
+        new double[]{
             0.957161207093473e-6 / Math.sqrt(1.0 / 7.0),
             0.203046201047864e-5 / Math.sqrt(6.0 / 7.0),
             0.904787894809528e-6 / Math.sqrt(60.0 / 7.0),
             0.721321757121568e-6 / Math.sqrt(360.0 / 7.0)
-        ));
-        add(Arrays.asList(
+        },
+        new double[]{
             0.539965866638991e-6 / Math.sqrt(24.0 / 216.0),
             -0.536157389388867e-6 / Math.sqrt(10.0 / 9.0),
             0.350501623962649e-6 / Math.sqrt(20.0),
             0.990856766672321e-6 / Math.sqrt(280.0),
             -0.188519633023033e-6 / Math.sqrt(2240.0)
-        ));
-    }};
+        }
+    };
 
-    public static final List<List<Double>> S = new ArrayList<List<Double>>() {{
-        add(Arrays.asList(0.0));
-        add(Arrays.asList(0.0, 0.0));
-        add(Arrays.asList(0.0, 0.138441389137979e-8 / Math.sqrt(0.6), -0.140027370385934e-5 / Math.sqrt(2.4)));
-        add(Arrays.asList(
+    public static final double[][] S = new double[][]{
+        new double[]{0.0},
+        new double[]{0.0, 0.0},
+        new double[]{
+            0.0,
+            0.138441389137979e-8 / Math.sqrt(0.6),
+            -0.140027370385934e-5 / Math.sqrt(2.4)
+        },
+        new double[]{
             0.0,
             0.248200415856872e-6 / Math.sqrt(6.0 / 7.0),
             -0.619005475177618e-6 / Math.sqrt(60.0 / 7.0),
             0.141434926192941e-5 / Math.sqrt(360.0 / 7.0)
-        ));
-        add(Arrays.asList(
+        },
+        new double[]{
             0.0,
             -0.473567346518086e-6 / Math.sqrt(10.0 / 9.0),
             0.662480026275829e-6 / Math.sqrt(20.0),
             -0.200956723567452e-6 / Math.sqrt(280.0),
             0.308803882149194e-6 / Math.sqrt(2240.0)
-        ));
-    }};
+        }
+    };
 
     private Earth(){}
 
@@ -149,5 +154,39 @@ public class Earth {
             new Vector(dpsi * ce, 1.0, -deps),
             new Vector(dpsi * se, deps, 1.0)
         );
+    }
+
+    public static double[][] getLegendrePolynomial(double phi){
+        double cosPhi = Math.cos(phi);
+        double sinPhi = Math.sin(phi);
+        double cosPhiSquared = cosPhi * cosPhi;
+        double sinPhiSquared = sinPhi * sinPhi;
+
+        double[][] p = new double[5][];
+        p[0] = new double[]{1.0, 0.0};
+        p[1] = new double[]{sinPhi, cosPhi, 0.0};
+        p[2] = new double[]{
+            (3.0 * sinPhiSquared - 1.0) * 0.5,
+            3.0 * sinPhi * cosPhi,
+            3.0 * cosPhiSquared,
+            0.0
+        };
+        p[3] = new double[]{
+            sinPhi * (5.0 * sinPhiSquared - 3.0) * 0.5,
+            (15.0 * sinPhiSquared - 3.0) * cosPhi * 0.5,
+            15.0 * sinPhi * cosPhiSquared,
+            15.0 * cosPhiSquared * cosPhi,
+            0.0
+        };
+        p[4] = new double[]{
+            0.125 * (35.0 * sinPhiSquared * sinPhiSquared - 30.0 * sinPhiSquared + 3.0),
+            2.5 * (7.0 * sinPhiSquared * sinPhi - 3.0 * sinPhi) * cosPhi,
+            (7.0 * sinPhiSquared - 1.0) * cosPhiSquared * 7.5,
+            105.0 * cosPhi * cosPhiSquared * sinPhi,
+            105.0 * cosPhiSquared * cosPhiSquared,
+            0.0
+        };
+
+        return p;
     }
 }
