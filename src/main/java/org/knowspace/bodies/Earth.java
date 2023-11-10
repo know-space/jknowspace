@@ -7,7 +7,6 @@ import org.knowspace.geometry.Angles;
 import org.knowspace.linalg.Matrix;
 import org.knowspace.time.Epoch;
 import org.knowspace.linalg.Vector;
-import org.knowspace.time.Epoch;
 
 public class Earth {
 
@@ -30,8 +29,8 @@ public class Earth {
     private static final double COEFF_K = Angles.degreeMinuteSecondToRadians(0, 0, 0.041833);
     private static final double COEFF_L = Angles.degreeMinuteSecondToRadians(0, 0, 0.7928);
     private static final double COEFF_M = Angles.degreeMinuteSecondToRadians(0, 0, 0.000205);
-    private static final double COEFF_N = Angles.degreeMinuteSecondToRadians(0, 0, 0.0026);
-    private static final double COEFF_O = Angles.degreeMinuteSecondToRadians(0, 0, 0.0002);
+    private static final double COEFF_N = Math.toRadians(0.0026);
+    private static final double COEFF_O = Math.toRadians(0.0002);
 
     public static final List<List<Double>> C = new ArrayList<List<Double>>() {{
         add(Arrays.asList(1.0));
@@ -79,7 +78,7 @@ public class Earth {
      * @return The obliquity of the ecliptic at the given epoch.
      */
     public static double getObliquityAtEpoch(Epoch epoch) {
-        double t = epoch.julianCenturiesPastJ2000();
+        double t = epoch.centuriesPastJ2000();
         return Earth.OBLIQUITY_J2000 - COEFF_A * t - COEFF_B * t * t + COEFF_C * t * t * t;
     }
 
@@ -89,7 +88,7 @@ public class Earth {
      * @return The rotation matrix from the inertial frame to the Earth-fixed frame at the given epoch.
      */
     public static Matrix rotation(Epoch epoch){
-        double d = epoch.MJD();
+        double d = epoch.daysPastJ2000();
         double arg1 = Math.toRadians(125.0 - 0.05295 * d);
         double arg2 = Math.toRadians(200.9 + 1.97129 * d);
         double dpsi = COEFF_D * Math.sin(arg1) - COEFF_E * Math.sin(arg2);
@@ -114,7 +113,7 @@ public class Earth {
      */
     public static Matrix precession(Epoch epoch) {
 
-        double t = epoch.julianCenturiesPastJ2000();
+        double t = epoch.centuriesPastJ2000();
 
         double x = COEFF_F * t + COEFF_G * t * t + COEFF_H * t * t * t;
         double y = COEFF_I * t - COEFF_J * t * t - COEFF_K * t * t * t;
@@ -135,7 +134,7 @@ public class Earth {
     }
 
     public static Matrix nutation(Epoch epoch) {
-        double d = epoch.MJD();
+        double d = epoch.daysPastJ2000();
         double arg1 = Math.toRadians(125.0 - 0.05295 * d);
         double arg2 = Math.toRadians(200.9 + 1.97129 * d);
         double dpsi = COEFF_D * Math.sin(arg1) - COEFF_E * Math.sin(arg2);
@@ -151,5 +150,4 @@ public class Earth {
             new Vector(dpsi * se, deps, 1.0)
         );
     }
-  
 }

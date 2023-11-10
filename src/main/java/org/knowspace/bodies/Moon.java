@@ -43,7 +43,7 @@ public class Moon {
      */
     public static Vector getPosition(Epoch epoch) {
         //Equation 3.47
-        double t = epoch.julianCenturiesPastJ2000();
+        double t = epoch.centuriesPastJ2000();
         double l0 = Math.toRadians(218.31617 + 481267.88088*t - 1.3972*t);
         double l = Math.toRadians(134.96292 + 477198.86753*t);
         double lp = Math.toRadians(357.52543 + 35999.04944*t);

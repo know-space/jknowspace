@@ -23,7 +23,7 @@ public class Sun {
      */
     public static Vector getPosition(Epoch posTime) {
 
-        double t = posTime.julianCenturiesPastJ2000();
+        double t = posTime.centuriesPastJ2000();
         double meanAnomaly = Math.toRadians(357.5256 + 35999.049*t);
 
         //Equation 3.43

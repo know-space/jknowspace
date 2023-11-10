@@ -30,12 +30,21 @@ public class Epoch {
     }
 
     /**
+     * This method returns the number of days past J2000
+     * @return              number of days past J2000
+     */
+    public double daysPastJ2000() 
+    {
+        return JD() - TimeConstants.J2000_AS_JULIAN;
+    }
+
+    /**
      * This method returns the number of centuries past J2000
      * @return              number of centuries past J2000
      */
-    public double julianCenturiesPastJ2000()
+    public double centuriesPastJ2000()
     {
-        return (JD()-TimeConstants.J2000_AS_JULIAN) * TimeConstants.DAYS_IN_CENTURY_INVERSE;
+        return (daysPastJ2000()) * TimeConstants.DAYS_IN_CENTURY_INVERSE;
     }
 
     /**
