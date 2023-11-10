@@ -7,6 +7,7 @@ import org.knowspace.geometry.Angles;
 import org.knowspace.linalg.Matrix;
 import org.knowspace.time.Epoch;
 import org.knowspace.linalg.Vector;
+import org.knowspace.time.Epoch;
 
 public class Earth {
 
@@ -21,6 +22,16 @@ public class Earth {
     private static final double COEFF_C = Angles.degreeMinuteSecondToRadians(0, 0, 0.001813);
     private static final double COEFF_D = Math.toRadians(-.0048);
     private static final double COEFF_E = Math.toRadians(0.0004); 
+    private static final double COEFF_F = Angles.degreeMinuteSecondToRadians(0, 0, 2306.2181);
+    private static final double COEFF_G = Angles.degreeMinuteSecondToRadians(0, 0, 0.30188);
+    private static final double COEFF_H = Angles.degreeMinuteSecondToRadians(0, 0, 0.017998);
+    private static final double COEFF_I = Angles.degreeMinuteSecondToRadians(0, 0, 2004.3109);
+    private static final double COEFF_J = Angles.degreeMinuteSecondToRadians(0, 0, 0.42665);
+    private static final double COEFF_K = Angles.degreeMinuteSecondToRadians(0, 0, 0.041833);
+    private static final double COEFF_L = Angles.degreeMinuteSecondToRadians(0, 0, 0.7928);
+    private static final double COEFF_M = Angles.degreeMinuteSecondToRadians(0, 0, 0.000205);
+    private static final double COEFF_N = Angles.degreeMinuteSecondToRadians(0, 0, 0.0026);
+    private static final double COEFF_O = Angles.degreeMinuteSecondToRadians(0, 0, 0.0002);
 
     public static final List<List<Double>> C = new ArrayList<List<Double>>() {{
         add(Arrays.asList(1.0));
@@ -77,7 +88,7 @@ public class Earth {
      * @param epoch The epoch at which to calculate the rotation matrix.
      * @return The rotation matrix from the inertial frame to the Earth-fixed frame at the given epoch.
      */
-    public static Matrix getRotationMatrix(Epoch epoch){
+    public static Matrix rotation(Epoch epoch){
         double d = epoch.MJD();
         double arg1 = Math.toRadians(125.0 - 0.05295 * d);
         double arg2 = Math.toRadians(200.9 + 1.97129 * d);
@@ -95,4 +106,50 @@ public class Earth {
             new Vector(0.0, 0.0, 1.0)
         );
     }
+    
+    /**
+     * Creates a matrix that can be used to transform a TOD position to MOD and vice versa.
+     * @param epoch The valid time of the state.
+     * @return The transformation matrix.
+     */
+    public static Matrix precession(Epoch epoch) {
+
+        double t = epoch.julianCenturiesPastJ2000();
+
+        double x = COEFF_F * t + COEFF_G * t * t + COEFF_H * t * t * t;
+        double y = COEFF_I * t - COEFF_J * t * t - COEFF_K * t * t * t;
+        double z = x + COEFF_L * t * t + COEFF_M * t * t * t;
+
+        double sz = Math.sin(z);
+        double sy = Math.sin(y);
+        double sx = Math.sin(x);
+        double cz = Math.cos(z);
+        double cy = Math.cos(y);
+        double cx = Math.cos(x);
+
+        return new Matrix(
+            new Vector(-sz * sx + cz * cy * cx, -sz * cx - cz * cy * sx, -cz * sy),
+            new Vector(cz * sx + sz * cy * cx, cz * cx - sz * cy * sx, -sz * sy),
+            new Vector(sy * cx, -sy * sx, cy)
+        );
+    }
+
+    public static Matrix nutation(Epoch epoch) {
+        double d = epoch.MJD();
+        double arg1 = Math.toRadians(125.0 - 0.05295 * d);
+        double arg2 = Math.toRadians(200.9 + 1.97129 * d);
+        double dpsi = COEFF_D * Math.sin(arg1) - COEFF_E * Math.sin(arg2);
+        double deps = COEFF_N * Math.cos(arg1) + COEFF_O * Math.cos(arg2);
+        double eps = Earth.getObliquityAtEpoch(epoch);
+
+        double ce = Math.cos(eps);
+        double se = Math.sin(eps);
+
+        return new Matrix(
+            new Vector(1.0, -dpsi * ce, -dpsi * se),
+            new Vector(dpsi * ce, 1.0, -deps),
+            new Vector(dpsi * se, deps, 1.0)
+        );
+    }
+  
 }
