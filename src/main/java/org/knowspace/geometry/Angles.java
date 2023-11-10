@@ -9,7 +9,7 @@ public class Angles {
         return angle % 360.0;
     }
 
-    public static double convertDegreeMinuteSecondToRadians(int degs, int minutes, double seconds) {
+    public static double degreeMinuteSecondToRadians(int degs, int minutes, double seconds) {
         return Math.toRadians(degs + minutes * TimeConstants.MINUTES_TO_HOURS + seconds * TimeConstants.SECONDS_TO_HOURS);
     }
 }

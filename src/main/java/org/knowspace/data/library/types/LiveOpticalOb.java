@@ -41,7 +41,7 @@ public class LiveOpticalOb {
     }
     
     private void parseEpoch(JSONObject QueryLine){
-        ObEpoch = Epoch.fromStringUTC(QueryLine.getString("obTime"));
+        ObEpoch = Epoch.fromUTC(QueryLine.getString("obTime"));
     }
 
     private void parseAzimuth(JSONObject QueryLine){

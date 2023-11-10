@@ -59,15 +59,15 @@ public class Matrix {
         dimension = new int[] {numberOfRows, numberOfColumns};
     }
 
-    public int[] getDimension(){
+    public int[] dimension(){
         return dimension;
     }
 
-    public boolean canMultiplyVector(Vector vec){
+    public boolean canMultiply(Vector vec){
         return numberOfColumns == vec.dimension;
     }
 
-    public boolean canMultiplyMatrix(Matrix mat){
+    public boolean canMultiply(Matrix mat){
         return numberOfColumns == mat.numberOfRows;
     }
 
@@ -75,8 +75,8 @@ public class Matrix {
         return mat.numberOfColumns == numberOfColumns && mat.numberOfRows == numberOfRows;
     }
 
-    public Vector getProductVector(Vector vec){
-        if(!canMultiplyVector(vec)){
+    public Vector multiply(Vector vec){
+        if(!canMultiply(vec)){
             String msg = "Number of matrix columns must be equal to vector dimension when multiplying.";
             throw new ArrayIndexOutOfBoundsException(msg);
         }
@@ -84,49 +84,49 @@ public class Matrix {
         switch(numberOfRows){
             case 2:
                 result = new Vector(
-                    rows[0].getDotProduct(vec), 
-                    rows[1].getDotProduct(vec)
+                    rows[0].dot(vec), 
+                    rows[1].dot(vec)
                 );
                 break;
             case 3:
                 result = new Vector(
-                    rows[0].getDotProduct(vec),
-                    rows[1].getDotProduct(vec),
-                    rows[2].getDotProduct(vec)
+                    rows[0].dot(vec),
+                    rows[1].dot(vec),
+                    rows[2].dot(vec)
                 );
                 break;
             case 4:
                 result = new Vector(
-                    rows[0].getDotProduct(vec),
-                    rows[1].getDotProduct(vec),
-                    rows[2].getDotProduct(vec),
-                    rows[3].getDotProduct(vec)
+                    rows[0].dot(vec),
+                    rows[1].dot(vec),
+                    rows[2].dot(vec),
+                    rows[3].dot(vec)
                 );
                 break;
             case 5:
                 result = new Vector(
-                    rows[0].getDotProduct(vec),
-                    rows[1].getDotProduct(vec),
-                    rows[2].getDotProduct(vec),
-                    rows[3].getDotProduct(vec),
-                    rows[4].getDotProduct(vec)
+                    rows[0].dot(vec),
+                    rows[1].dot(vec),
+                    rows[2].dot(vec),
+                    rows[3].dot(vec),
+                    rows[4].dot(vec)
                 );
                 break;
             case 6:
                 result = new Vector(
-                    rows[0].getDotProduct(vec),
-                    rows[1].getDotProduct(vec),
-                    rows[2].getDotProduct(vec),
-                    rows[3].getDotProduct(vec),
-                    rows[4].getDotProduct(vec),
-                    rows[5].getDotProduct(vec)
+                    rows[0].dot(vec),
+                    rows[1].dot(vec),
+                    rows[2].dot(vec),
+                    rows[3].dot(vec),
+                    rows[4].dot(vec),
+                    rows[5].dot(vec)
                 );
                 break;
         }
         return result;
     }
 
-    public Vector getColumnVector(int col){
+    public Vector column(int col){
         Vector result = new Vector();
         switch(numberOfRows){
             case 2:
@@ -148,47 +148,47 @@ public class Matrix {
         return result;
     }
 
-    public Matrix getTranspose(){
+    public Matrix transpose(){
         Matrix result = new Matrix();
         switch(numberOfColumns){
             case 2:
                 result = new Matrix(
-                    getColumnVector(0),
-                    getColumnVector(1)
+                    column(0),
+                    column(1)
                 );
                 break;
             case 3:
                 result = new Matrix(
-                    getColumnVector(0),
-                    getColumnVector(1),
-                    getColumnVector(2)
+                    column(0),
+                    column(1),
+                    column(2)
                 );
                 break;
             case 4:
                 result = new Matrix(
-                    getColumnVector(0),
-                    getColumnVector(1),
-                    getColumnVector(2),
-                    getColumnVector(3)
+                    column(0),
+                    column(1),
+                    column(2),
+                    column(3)
                 );
                 break;
             case 5:
                 result = new Matrix(
-                    getColumnVector(0),
-                    getColumnVector(1),
-                    getColumnVector(2),
-                    getColumnVector(3),
-                    getColumnVector(4)
+                    column(0),
+                    column(1),
+                    column(2),
+                    column(3),
+                    column(4)
                 );
                 break;
             case 6:
                 result = new Matrix(
-                    getColumnVector(0),
-                    getColumnVector(1),
-                    getColumnVector(2),
-                    getColumnVector(3),
-                    getColumnVector(4),
-                    getColumnVector(5)
+                    column(0),
+                    column(1),
+                    column(2),
+                    column(3),
+                    column(4),
+                    column(5)
                 );
                 break;
         }
@@ -197,7 +197,7 @@ public class Matrix {
 
     }
 
-    public Matrix getSummationMatrix(Matrix mat){
+    public Matrix plus(Matrix mat){
         Matrix result = new Matrix();
         if(!dimensionsEqual(mat)){
             String msg = "Dimensions must be equal to add matrices.";
@@ -223,7 +223,7 @@ public class Matrix {
         return result;
     }
 
-    public Matrix getDifferenceMatrix(Matrix mat){
+    public Matrix minus(Matrix mat){
         Matrix result = new Matrix();
         if(!dimensionsEqual(mat)){
             String msg = "Dimensions must be equal to subtract matrices.";
@@ -249,7 +249,7 @@ public class Matrix {
         return result;
     }
 
-    public Matrix getScaledMatrix(double scalar){
+    public Matrix scale(double scalar){
         Matrix result = new Matrix();
         switch(numberOfRows){
             case 2:
@@ -271,183 +271,183 @@ public class Matrix {
         return result;
     }
 
-    public double getElement(int row, int col){
-        return rows[row].getElement(col);
+    public double element(int row, int col){
+        return rows[row].element(col);
     }
 
     private Matrix add2D(Matrix mat){
         return new Matrix(
-            rows[0].getSummationVector(mat.rows[0]),
-            rows[1].getSummationVector(mat.rows[1])
+            rows[0].plus(mat.rows[0]),
+            rows[1].plus(mat.rows[1])
         );
     }
     private Matrix add3D(Matrix mat){
         return new Matrix(
-            rows[0].getSummationVector(mat.rows[0]),
-            rows[1].getSummationVector(mat.rows[1]),
-            rows[2].getSummationVector(mat.rows[2])
+            rows[0].plus(mat.rows[0]),
+            rows[1].plus(mat.rows[1]),
+            rows[2].plus(mat.rows[2])
         );
     }
     private Matrix add4D(Matrix mat){
         return new Matrix(
-            rows[0].getSummationVector(mat.rows[0]),
-            rows[1].getSummationVector(mat.rows[1]),
-            rows[2].getSummationVector(mat.rows[2]),
-            rows[3].getSummationVector(mat.rows[3])
+            rows[0].plus(mat.rows[0]),
+            rows[1].plus(mat.rows[1]),
+            rows[2].plus(mat.rows[2]),
+            rows[3].plus(mat.rows[3])
         );
     }
     private Matrix add5D(Matrix mat){
         return new Matrix(
-            rows[0].getSummationVector(mat.rows[0]),
-            rows[1].getSummationVector(mat.rows[1]),
-            rows[2].getSummationVector(mat.rows[2]),
-            rows[3].getSummationVector(mat.rows[3]),
-            rows[4].getSummationVector(mat.rows[4])
+            rows[0].plus(mat.rows[0]),
+            rows[1].plus(mat.rows[1]),
+            rows[2].plus(mat.rows[2]),
+            rows[3].plus(mat.rows[3]),
+            rows[4].plus(mat.rows[4])
         );
     }
     private Matrix add6D(Matrix mat){
         return new Matrix(
-            rows[0].getSummationVector(mat.rows[0]),
-            rows[1].getSummationVector(mat.rows[1]),
-            rows[2].getSummationVector(mat.rows[2]),
-            rows[3].getSummationVector(mat.rows[3]),
-            rows[4].getSummationVector(mat.rows[4]),
-            rows[5].getSummationVector(mat.rows[5])
+            rows[0].plus(mat.rows[0]),
+            rows[1].plus(mat.rows[1]),
+            rows[2].plus(mat.rows[2]),
+            rows[3].plus(mat.rows[3]),
+            rows[4].plus(mat.rows[4]),
+            rows[5].plus(mat.rows[5])
         );
     }
 
     private Vector getColumn2D(int col){
         return new Vector(
-            rows[0].getElement(col), 
-            rows[1].getElement(col)
+            rows[0].element(col), 
+            rows[1].element(col)
         );
     }
 
     private Vector getColumn3D(int col){
         return new Vector(
-            rows[0].getElement(col),
-            rows[1].getElement(col),
-            rows[2].getElement(col)
+            rows[0].element(col),
+            rows[1].element(col),
+            rows[2].element(col)
         );
     }
 
     private Vector getColumn4D(int col){
         return new Vector(
-            rows[0].getElement(col),
-            rows[1].getElement(col),
-            rows[2].getElement(col),
-            rows[3].getElement(col)
+            rows[0].element(col),
+            rows[1].element(col),
+            rows[2].element(col),
+            rows[3].element(col)
         );
     }
 
     private Vector getColumn5D(int col){
         return new Vector(
-            rows[0].getElement(col),
-            rows[1].getElement(col),
-            rows[2].getElement(col),
-            rows[3].getElement(col),
-            rows[4].getElement(col)
+            rows[0].element(col),
+            rows[1].element(col),
+            rows[2].element(col),
+            rows[3].element(col),
+            rows[4].element(col)
         );
     }
 
     private Vector getColumn6D(int col){
         return new Vector(
-            rows[0].getElement(col),
-            rows[1].getElement(col),
-            rows[2].getElement(col),
-            rows[3].getElement(col),
-            rows[4].getElement(col),
-            rows[5].getElement(col)
+            rows[0].element(col),
+            rows[1].element(col),
+            rows[2].element(col),
+            rows[3].element(col),
+            rows[4].element(col),
+            rows[5].element(col)
         );
     }
  
     private Matrix subract2D(Matrix mat){
         return new Matrix(
-            rows[0].getDifferenceVector(mat.rows[0]),
-            rows[1].getDifferenceVector(mat.rows[1])
+            rows[0].minus(mat.rows[0]),
+            rows[1].minus(mat.rows[1])
         );
     }
 
     private Matrix subract3D(Matrix mat){
         return new Matrix(
-            rows[0].getDifferenceVector(mat.rows[0]),
-            rows[1].getDifferenceVector(mat.rows[1]),
-            rows[2].getDifferenceVector(mat.rows[2])
+            rows[0].minus(mat.rows[0]),
+            rows[1].minus(mat.rows[1]),
+            rows[2].minus(mat.rows[2])
         );
     }
 
     private Matrix subract4D(Matrix mat){
         return new Matrix(
-            rows[0].getDifferenceVector(mat.rows[0]),
-            rows[1].getDifferenceVector(mat.rows[1]),
-            rows[2].getDifferenceVector(mat.rows[2]),
-            rows[3].getDifferenceVector(mat.rows[3])
+            rows[0].minus(mat.rows[0]),
+            rows[1].minus(mat.rows[1]),
+            rows[2].minus(mat.rows[2]),
+            rows[3].minus(mat.rows[3])
         );
     }
 
     private Matrix subract5D(Matrix mat){
         return new Matrix(
-            rows[0].getDifferenceVector(mat.rows[0]),
-            rows[1].getDifferenceVector(mat.rows[1]),
-            rows[2].getDifferenceVector(mat.rows[2]),
-            rows[3].getDifferenceVector(mat.rows[3]),
-            rows[4].getDifferenceVector(mat.rows[4])
+            rows[0].minus(mat.rows[0]),
+            rows[1].minus(mat.rows[1]),
+            rows[2].minus(mat.rows[2]),
+            rows[3].minus(mat.rows[3]),
+            rows[4].minus(mat.rows[4])
         );
     }
 
     private Matrix subract6D(Matrix mat){
         return new Matrix(
-            rows[0].getDifferenceVector(mat.rows[0]),
-            rows[1].getDifferenceVector(mat.rows[1]),
-            rows[2].getDifferenceVector(mat.rows[2]),
-            rows[3].getDifferenceVector(mat.rows[3]),
-            rows[4].getDifferenceVector(mat.rows[4]),
-            rows[5].getDifferenceVector(mat.rows[5])
+            rows[0].minus(mat.rows[0]),
+            rows[1].minus(mat.rows[1]),
+            rows[2].minus(mat.rows[2]),
+            rows[3].minus(mat.rows[3]),
+            rows[4].minus(mat.rows[4]),
+            rows[5].minus(mat.rows[5])
         );
     }
 
     private Matrix scale2D(double scalar){
         return new Matrix(
-            rows[0].getScaledVector(scalar),
-            rows[1].getScaledVector(scalar)
+            rows[0].scale(scalar),
+            rows[1].scale(scalar)
         );
     }
 
     private Matrix scale3D(double scalar){
         return new Matrix(
-            rows[0].getScaledVector(scalar),
-            rows[1].getScaledVector(scalar),
-            rows[2].getScaledVector(scalar)
+            rows[0].scale(scalar),
+            rows[1].scale(scalar),
+            rows[2].scale(scalar)
         );
     }
 
     private Matrix scale4D(double scalar){
         return new Matrix(
-            rows[0].getScaledVector(scalar),
-            rows[1].getScaledVector(scalar),
-            rows[2].getScaledVector(scalar),
-            rows[3].getScaledVector(scalar)
+            rows[0].scale(scalar),
+            rows[1].scale(scalar),
+            rows[2].scale(scalar),
+            rows[3].scale(scalar)
         );
     }
 
     private Matrix scale5D(double scalar){
         return new Matrix(
-            rows[0].getScaledVector(scalar),
-            rows[1].getScaledVector(scalar),
-            rows[2].getScaledVector(scalar),
-            rows[3].getScaledVector(scalar),
-            rows[4].getScaledVector(scalar)
+            rows[0].scale(scalar),
+            rows[1].scale(scalar),
+            rows[2].scale(scalar),
+            rows[3].scale(scalar),
+            rows[4].scale(scalar)
         );
     }
 
     private Matrix scale6D(double scalar){
         return new Matrix(
-            rows[0].getScaledVector(scalar),
-            rows[1].getScaledVector(scalar),
-            rows[2].getScaledVector(scalar),
-            rows[3].getScaledVector(scalar),
-            rows[4].getScaledVector(scalar),
-            rows[5].getScaledVector(scalar)
+            rows[0].scale(scalar),
+            rows[1].scale(scalar),
+            rows[2].scale(scalar),
+            rows[3].scale(scalar),
+            rows[4].scale(scalar),
+            rows[5].scale(scalar)
         );
     }
 

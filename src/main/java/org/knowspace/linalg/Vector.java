@@ -56,7 +56,7 @@ public class Vector {
         dimension = 6;
     }
 
-    public double getElement(int index){
+    public double element(int index){
         return components[index];
     }
 
@@ -65,10 +65,10 @@ public class Vector {
     }
 
     public static Matrix getRotationMatrix(Vector axis, double angle){
-        Vector unitAx = axis.getNormalizedVector();
-        double ux = unitAx.getElement(0);
-        double uy = unitAx.getElement(1);
-        double uz = unitAx.getElement(2);
+        Vector unitAx = axis.normalized();
+        double ux = unitAx.element(0);
+        double uy = unitAx.element(1);
+        double uz = unitAx.element(2);
         double c = Math.cos(angle);
         double s = Math.sin(angle);
         double cdiff = 1 - c;
@@ -89,10 +89,10 @@ public class Vector {
 
         return new Matrix(r1, r2, r3);
     }
-    public double getAngle(Vector vecToCompare){
+    public double angle(Vector vecToCompare){
 
-        double firstMagnitude = getMagnitude();
-        double secondMagnitude = vecToCompare.getMagnitude();
+        double firstMagnitude = magnitude();
+        double secondMagnitude = vecToCompare.magnitude();
 
         // Check for invalid inputs
         if(!dimensionsEqual(vecToCompare)){
@@ -109,7 +109,7 @@ public class Vector {
         }
 
         // Calculate the cosine of the angle
-        double cosTheta = getDotProduct(vecToCompare) / (getMagnitude() * vecToCompare.getMagnitude());
+        double cosTheta = dot(vecToCompare) / (magnitude() * vecToCompare.magnitude());
         
         // Adjust for possible numerical inaccuracy that might push the value slightly out of range for acos
         cosTheta = Math.min(1.0, Math.max(-1.0, cosTheta));
@@ -118,7 +118,7 @@ public class Vector {
         return Math.acos(cosTheta);
     }
 
-    public Vector getSummationVector(Vector vecToAdd){
+    public Vector plus(Vector vecToAdd){
         
         Vector result = new Vector();
 
@@ -147,7 +147,7 @@ public class Vector {
         return result;
     }
 
-    public Vector getDifferenceVector(Vector vecToSubtract){
+    public Vector minus(Vector vecToSubtract){
 
         Vector result = new Vector();
 
@@ -176,7 +176,7 @@ public class Vector {
         return result;
     }
 
-    public double getDotProduct(Vector vecToDot){
+    public double dot(Vector vecToDot){
 
         double result = Double.NaN;
 
@@ -205,7 +205,7 @@ public class Vector {
         return result;
     }
 
-    public double getMagnitude(){
+    public double magnitude(){
         
         double result = Double.NaN;
         
@@ -231,7 +231,7 @@ public class Vector {
         return result;
     }
 
-    public Vector getScaledVector(double scalar){
+    public Vector scale(double scalar){
 
         Vector result = new Vector();
 
@@ -256,7 +256,7 @@ public class Vector {
         return result;
     }
 
-    public Vector getNormalizedVector(){
+    public Vector normalized(){
 
         Vector result = new Vector();
 
@@ -451,7 +451,7 @@ public class Vector {
         );
     }
 
-    public Vector getCrossProduct(Vector vecToCross){
+    public Vector cross(Vector vecToCross){
 
         if(vecToCross.dimension != 3 || dimension != 3){
             throw new ArrayIndexOutOfBoundsException("Dimensions must equal 3 to perform vector cross product.");

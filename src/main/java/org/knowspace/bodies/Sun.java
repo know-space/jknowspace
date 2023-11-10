@@ -8,16 +8,17 @@ public class Sun {
 
     public static final double MU = 132712440018.0; // km^3/s^2
     public static final double RADIUS = 695700.0; // km
-
-    private static final double EXP_A = Angles.convertDegreeMinuteSecondToRadians(0, 0, 6892.0);
-    private static final double EXP_B = Angles.convertDegreeMinuteSecondToRadians(0, 0, 72.0);
+    public static final double P = 4.56e-6; // N/m^2
+    
+    private static final double EXP_A = Angles.degreeMinuteSecondToRadians(0, 0, 6892.0);
+    private static final double EXP_B = Angles.degreeMinuteSecondToRadians(0, 0, 72.0);
     private static final double W_PLUS_W = Math.toRadians(282.94);
     
     private Sun() {}
 
-    public static Vector getPositionECI(Epoch posTime) {
+    public static Vector getPosition(Epoch posTime) {
 
-        double t = posTime.getJulianCenturiesPastJ2000();
+        double t = posTime.julianCenturiesPastJ2000();
         double meanAnomaly = Math.toRadians(357.5256 + 35999.049*t);
 
         //Equation 3.43

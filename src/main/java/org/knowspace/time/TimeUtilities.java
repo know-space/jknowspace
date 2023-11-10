@@ -8,7 +8,7 @@ public class TimeUtilities
      * @param decimalDay    decimal of day
      * @return              array of integers of the form {hours, minutes, microseconds}
      */
-    public static int[] convertDayToHourMinuteMicrosecond(double decimalDay)
+    public static int[] dayToHourMinuteMicrosecond(double decimalDay)
     {
     
         int hours = (int) (decimalDay*TimeConstants.DAYS_TO_HOURS);
@@ -27,9 +27,9 @@ public class TimeUtilities
      * @param decimalDay    decimal of day
      * @return              string of the form hh:mm:ss.ssssss
      */
-    public static String convertDayToTimeString(double decimalDay)
+    public static String dayToTimeString(double decimalDay)
     {
-        int[] hms = convertDayToHourMinuteMicrosecond(decimalDay);
+        int[] hms = dayToHourMinuteMicrosecond(decimalDay);
         String hh = String.format("%02d", hms[0]);
         String mm = String.format("%02d", hms[1]);
         String ss = String.format("%09.6f", hms[2]*1e-6);
@@ -45,7 +45,7 @@ public class TimeUtilities
      * @param second    seconds
      * @return          decimal of day
      */
-    public static double convertHourMinuteSecondToDay(int hour, int minute, double second)
+    public static double hourMinuteSecondToDay(int hour, int minute, double second)
     {
         return hour*TimeConstants.HOURS_TO_DAYS + minute*TimeConstants.MINUTES_TO_DAYS + second*TimeConstants.SECONDS_TO_DAYS;
     }
@@ -60,7 +60,7 @@ public class TimeUtilities
      * @param s         second
      * @return          Modified Julian Date
      */
-    public static double convertDateTimeValuesToMJD(int yr, int mon, int d, int hr, int m, double s)
+    public static double dateTimeValuesToMJD(int yr, int mon, int d, int hr, int m, double s)
     {
         double y = (float) yr;
         double mth = (float) mon;
@@ -75,7 +75,7 @@ public class TimeUtilities
         double b = Math.floor(y*.0025) - Math.floor(y*.01) + Math.floor(y*.25);
         double mjd = 365.0*y - 679004.0 + b + Math.floor(30.6001*(mth+1.0)) + day;
 
-        return mjd + convertHourMinuteSecondToDay(hr, m, s);
+        return mjd + hourMinuteSecondToDay(hr, m, s);
     }
 
     /**
@@ -85,7 +85,7 @@ public class TimeUtilities
      * @param NewDateTimeString     string of the form YYYY-MM-DDThh:mm:ss.ssssssZ
      * @return                      array of strings of the form {YYYY, MM, DD, hh, mm, ss.ssssss}
      */
-    public static String[] convertStringToDateTimeArray(String NewDateTimeString)
+    public static String[] stringToDateTimeArray(String NewDateTimeString)
     {
         String FormattedString = NewDateTimeString.replace("Z", "").replace("T", " ");
         String[] dateTime = FormattedString.split(" ");
@@ -108,7 +108,7 @@ public class TimeUtilities
      * @param mjdVal        Modified Julian Date
      * @return              string of the form YYYY-MM-DDThh:mm:ss.ssssssZ
      */
-    public static String convertModifiedJulianToString(double mjdVal)
+    public static String mjdToString(double mjdVal)
     {
 
         double floorMJD = Math.floor(mjdVal);
@@ -119,7 +119,7 @@ public class TimeUtilities
 
         double decimalDay = mjdVal - (int)mjdVal;
 
-        String TimeString = TimeUtilities.convertDayToTimeString(decimalDay) + "Z";
+        String TimeString = TimeUtilities.dayToTimeString(decimalDay) + "Z";
         
         if(a >= 2299161.0)
         {
@@ -150,9 +150,9 @@ public class TimeUtilities
      * @param julianVal     Julian Date
      * @return              string of the form YYYY-MM-DDThh:mm:ss.ssssssZ
      */
-    public static String convertJulianToString(double julianVal)
+    public static String jdToString(double julianVal)
     {
-        return convertModifiedJulianToString(julianVal - TimeConstants.MJD_ZERO_AS_JULIAN);
+        return mjdToString(julianVal - TimeConstants.MJD_ZERO_AS_JULIAN);
     }
 
     /**
@@ -161,11 +161,11 @@ public class TimeUtilities
      * @param NewDateTimeString     string of the form YYYY-MM-DDThh:mm:ss.ssssssZ
      * @return                      Modified Julian Date
      */
-    public static double convertStringToMJD(String NewDateTimeString)
+    public static double stringToMJD(String NewDateTimeString)
     {
-        String[] DateTimeArray = TimeUtilities.convertStringToDateTimeArray(NewDateTimeString);
+        String[] DateTimeArray = TimeUtilities.stringToDateTimeArray(NewDateTimeString);
         System.out.println(DateTimeArray[0] + " " + DateTimeArray[1] + " " + DateTimeArray[2] + " " + DateTimeArray[3] + " " + DateTimeArray[4] + " " + DateTimeArray[5]);
-        return convertDateTimeValuesToMJD(
+        return dateTimeValuesToMJD(
             Integer.parseInt(DateTimeArray[0]),
             Integer.parseInt(DateTimeArray[1]),
             Integer.parseInt(DateTimeArray[2]),

@@ -8,14 +8,14 @@ public class TimeUtilitiesTest {
     @Test
     public void testConvertJulianToString()
     {
-        String date = TimeUtilities.convertJulianToString(2460250.0);
+        String date = TimeUtilities.jdToString(2460250.0);
         assertEquals("2023-11-01T12:00:00.000000Z", date);
     }
 
     @Test
     public void testConvertDayToHourMinuteMicrosecond()
     {
-        int[] hms = TimeUtilities.convertDayToHourMinuteMicrosecond(.54284);
+        int[] hms = TimeUtilities.dayToHourMinuteMicrosecond(.54284);
         assertEquals(13, hms[0]);
         assertEquals(1, hms[1]);
         assertEquals(41376000, hms[2]);
@@ -24,28 +24,28 @@ public class TimeUtilitiesTest {
     @Test
     public void testConvertHourMinuteSecondToDay()
     {
-        double day = TimeUtilities.convertHourMinuteSecondToDay(13, 1, 41.376);
+        double day = TimeUtilities.hourMinuteSecondToDay(13, 1, 41.376);
         assertEquals(.54284, day, 1e-6);
     }
 
     @Test
     public void testConvertDayToTimeString()
     {
-        String time = TimeUtilities.convertDayToTimeString(.54284);
+        String time = TimeUtilities.dayToTimeString(.54284);
         assertEquals("13:01:41.376000", time);
     }
 
     @Test
     public void testConvertDateTimeValuesToMJD()
     {
-        double mjd = TimeUtilities.convertDateTimeValuesToMJD(2023, 11, 1, 12, 42, 8.0);
+        double mjd = TimeUtilities.dateTimeValuesToMJD(2023, 11, 1, 12, 42, 8.0);
         assertEquals(60249.52925925926, mjd, 1e-6);
     }
 
     @Test
     public void testConvertStringToDateTimeArray()
     {
-        String[] dt = TimeUtilities.convertStringToDateTimeArray("2023-11-01T12:42:08.000000Z");
+        String[] dt = TimeUtilities.stringToDateTimeArray("2023-11-01T12:42:08.000000Z");
         assertEquals("2023", dt[0]);
         assertEquals("11", dt[1]);
         assertEquals("01", dt[2]);
@@ -57,14 +57,14 @@ public class TimeUtilitiesTest {
     @Test
     public void testConvertModifiedJulianToString()
     {
-        String date = TimeUtilities.convertModifiedJulianToString(60249.52925925926);
+        String date = TimeUtilities.mjdToString(60249.52925925926);
         assertEquals("2023-11-01T12:42:08.000000Z", date);
     }
 
     @Test
     public void testConvertStringToMJD()
     {
-        double mjd = TimeUtilities.convertStringToMJD("2023-11-01T12:42:08.000000Z");
+        double mjd = TimeUtilities.stringToMJD("2023-11-01T12:42:08.000000Z");
         assertEquals(60249.52925925926, mjd, 1e-6);
     }
 

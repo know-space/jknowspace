@@ -17,7 +17,7 @@ public class Equations {
          * velocity: velocity of orbiting body (km/s)
          * returns: period of orbit (seconds)
          */
-        return 2*Math.PI*sma/velocity;
+        return 2.0*Math.PI*sma/velocity;
     }
 
     public static double getVelocity(double mu, double sma, double radius){
@@ -27,7 +27,7 @@ public class Equations {
          * radius: distance from center of body (km)
          * returns: velocity of orbiting body (km/s)
          */
-        return Math.sqrt(mu*(2/radius - 1/sma)); // km/s
+        return Math.sqrt(mu*(2.0/radius - 1.0/sma)); // km/s
     }
 
 }

@@ -9,36 +9,36 @@ public class Moon {
     public static final double MU = 4902.8005821478; // km^3/s^2
     public static final double RADIUS = 1737.4; // km
 
-    private static final double A0 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 22640.0);
-    private static final double A1 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 769.0);
-    private static final double A2 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 4586.0);
-    private static final double A3 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 2370.0);
-    private static final double A4 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 668.0);
-    private static final double A5 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 412.0);
-    private static final double A6 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 212.0);
-    private static final double A7 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 206.0);
-    private static final double A8 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 192.0);
-    private static final double A9 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 165.0);
-    private static final double A10 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 148.0);
-    private static final double A11 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 125.0);
-    private static final double A12 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 110.0);
-    private static final double A13 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 55.0);
-    private static final double B0 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 18520.0);
-    private static final double B1 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 412.0);
-    private static final double B2 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 541.0);
-    private static final double B3 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 526.0);
-    private static final double B4 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 44.0);
-    private static final double B5 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 31.0);
-    private static final double B6 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 25.0);
-    private static final double B7 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 23.0);
-    private static final double B8 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 21.0);
-    private static final double B9 = Angles.convertDegreeMinuteSecondToRadians(0, 0, 11.0);
+    private static final double A0 = Angles.degreeMinuteSecondToRadians(0, 0, 22640.0);
+    private static final double A1 = Angles.degreeMinuteSecondToRadians(0, 0, 769.0);
+    private static final double A2 = Angles.degreeMinuteSecondToRadians(0, 0, 4586.0);
+    private static final double A3 = Angles.degreeMinuteSecondToRadians(0, 0, 2370.0);
+    private static final double A4 = Angles.degreeMinuteSecondToRadians(0, 0, 668.0);
+    private static final double A5 = Angles.degreeMinuteSecondToRadians(0, 0, 412.0);
+    private static final double A6 = Angles.degreeMinuteSecondToRadians(0, 0, 212.0);
+    private static final double A7 = Angles.degreeMinuteSecondToRadians(0, 0, 206.0);
+    private static final double A8 = Angles.degreeMinuteSecondToRadians(0, 0, 192.0);
+    private static final double A9 = Angles.degreeMinuteSecondToRadians(0, 0, 165.0);
+    private static final double A10 = Angles.degreeMinuteSecondToRadians(0, 0, 148.0);
+    private static final double A11 = Angles.degreeMinuteSecondToRadians(0, 0, 125.0);
+    private static final double A12 = Angles.degreeMinuteSecondToRadians(0, 0, 110.0);
+    private static final double A13 = Angles.degreeMinuteSecondToRadians(0, 0, 55.0);
+    private static final double B0 = Angles.degreeMinuteSecondToRadians(0, 0, 18520.0);
+    private static final double B1 = Angles.degreeMinuteSecondToRadians(0, 0, 412.0);
+    private static final double B2 = Angles.degreeMinuteSecondToRadians(0, 0, 541.0);
+    private static final double B3 = Angles.degreeMinuteSecondToRadians(0, 0, 526.0);
+    private static final double B4 = Angles.degreeMinuteSecondToRadians(0, 0, 44.0);
+    private static final double B5 = Angles.degreeMinuteSecondToRadians(0, 0, 31.0);
+    private static final double B6 = Angles.degreeMinuteSecondToRadians(0, 0, 25.0);
+    private static final double B7 = Angles.degreeMinuteSecondToRadians(0, 0, 23.0);
+    private static final double B8 = Angles.degreeMinuteSecondToRadians(0, 0, 21.0);
+    private static final double B9 = Angles.degreeMinuteSecondToRadians(0, 0, 11.0);
 
     private Moon(){}
 
-    public static Vector getPositionECI(Epoch epoch) {
+    public static Vector getPosition(Epoch epoch) {
         //Equation 3.47
-        double t = epoch.getJulianCenturiesPastJ2000();
+        double t = epoch.julianCenturiesPastJ2000();
         double l0 = Math.toRadians(218.31617 + 481267.88088*t - 1.3972*t);
         double l = Math.toRadians(134.96292 + 477198.86753*t);
         double lp = Math.toRadians(357.52543 + 35999.04944*t);
